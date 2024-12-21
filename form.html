@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leave Prediction</title>
+</head>
+<body>
+    <h1>Leave Prediction Form</h1>
+    <form method="POST" action="process.php">
+        <label for="email">Email ID:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="from_date">From Date:</label>
+        <input type="date" id="from_date" name="from_date" required><br><br>
+
+        <label for="to_date">To Date:</label>
+        <input type="date" id="to_date" name="to_date" required><br><br>
+
+        <label for="leave_type">Leave Type:</label>
+        <select id="leave_type" name="leave_type" required>
+            <option value="sick">Sick Leave</option>
+            <option value="casual">Casual Leave</option>
+            <option value="earned">Earned Leave</option>
+        </select><br><br>
+
+        <label for="leave_reason">Leave Reason:</label><br>
+        <textarea id="leave_reason" name="leave_reason" rows="4" cols="50" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
