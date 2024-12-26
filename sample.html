@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Prediction</title>
+</head>
+<body>
+    <h2>Leave Prediction</h2>
+    <!-- Form for submitting data -->
+    <form id="leave-form">
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="from_date">From Date:</label><br>
+        <input type="date" id="from_date" name="from_date" required><br><br>
+        
+        <label for="to_date">To Date:</label><br>
+        <input type="date" id="to_date" name="to_date" required><br><br>
+        
+        <label for="leave_type">Leave Type:</label><br>
+        <input type="text" id="leave_type" name="leave_type" required><br><br>
+        
+        <label for="leave_reason">Leave Reason:</label><br>
+        <textarea id="leave_reason" name="leave_reason" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+    
+    <div id="prediction-result"></div> <!-- Result display area -->
+
+    <script>
+        document.getElementById('leave-form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the default form submission
+
+            // Get form data
+            const email = document.getElementById('email').value;
+            const from_date = document.getElementById('from_date').value;
+            const to_date = document.getElementById('to_date').value;
+            const leave_type = document.getElementById('leave_type').value;
+            const leave_reason = document.getElementById('leave_reason').value;
+
+            // Prepare data as a JavaScript object
+            const data = {
+                email: email,
+                from_date: from_date,
+                to_date: to_date,
+                leave_type: leave_type,
+                leave_reason: leave_reason
+            };
+
+            // Send POST request to Flask API using Fetch API
+            fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())  // Parse the JSON response
+            .then(result => {
+                // Check for prediction result
+                if (result.prediction) {
+                    document.getElementById('prediction-result').innerHTML = `<h3>Prediction: ${result.prediction}</h3>`;
+                } else {
+                    document.getElementById('prediction-result').innerHTML = `<h3>Error: ${result.error}</h3>`;
+                }
+            })
+            .catch(error => {
+                // Handle any errors that may occur
+                document.getElementById('prediction-result').innerHTML = `<h3>Error: ${error}</h3>`;
+            });
+        });
+    </script>
+</body>
+</html>

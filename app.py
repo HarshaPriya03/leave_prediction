@@ -8,7 +8,7 @@ def predict():
     # Get form data from the request
     data = request.json  # Assuming you're sending data as JSON
     
-    # Extract the values from the data (example, adjust for your form)
+    # Extract the values from the data
     email = data['email']
     from_date = data['from_date']
     to_date = data['to_date']
@@ -19,7 +19,7 @@ def predict():
     prediction = ml_model.predict_leave(email, from_date, to_date, leave_type, leave_reason)
     
     # Return the prediction as a JSON response
-    return jsonify({'prediction': prediction.tolist()})
+    return jsonify({'prediction': prediction})
 
 if __name__ == '__main__':
     app.run(debug=True)
